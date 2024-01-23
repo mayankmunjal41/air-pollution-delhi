@@ -1,0 +1,1 @@
+You can place any JSON or CSV files in this folder.

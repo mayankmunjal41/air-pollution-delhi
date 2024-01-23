@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Air Pollution Delhi</title>
+		<link rel="stylesheet" href="./css/global.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Copse&family=Lora&family=Nunito:wght@300;400;500;700&family=PT+Serif&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Jaldi&display=swap"
+			rel="stylesheet"
+		/>
+		<script src="./js/scrollama.min.js"></script>
+	</head>
+
+	<style>
+		#scrolly > svg {
+			position: fixed;
+			right: 0;
+			top: 15%;
+			z-index: 1;
+		}
+
+		.step {
+			width: 50%;
+			height: calc(100vh - 50px);
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			margin-top: 100px;
+		}
+
+		.step p {
+			width: 70%;
+			padding: 0 50px;
+		}
+
+		body {
+			font-family: "Cardo", serif;
+		}
+
+		h1 {
+			font-size: 80px;
+			padding-left: 50px;
+			position: fixed;
+			top: 0;
+			width: 50%;
+			background: white;
+			margin: 0;
+			padding-top: 50px;
+		}
+
+		p {
+			font-family: "Jaldi", serif;
+			font-size: 22px;
+		}
+
+		.charts {
+			display: flex;
+			flex-wrap: wrap;
+			opacity: 0;
+			position: fixed;
+			right: 0;
+			top: 15%;
+			width: 50%;
+			justify-content: center;
+			margin-right: 50px;
+			margin-top: 30px;
+		}
+
+		.charts p {
+			text-align: center;
+			width: auto;
+			margin-bottom: 0;
+		}
+
+		.labels {
+			display: flex;
+			gap: 16px;
+			flex-wrap: wrap;
+			margin: 0 auto;
+			/* justify-content: center; */
+			margin-top: 20px;
+			width: 80%;
+			margin-right: 50px;
+			font-family: "Cardo";
+		}
+
+		.legend-group {
+			opacity: 0;
+		}
+
+		.tooltip {
+			position: absolute;
+			background-color: white;
+			border: 1px solid #ccc;
+			padding: 5px;
+			border-radius: 5px;
+			pointer-events: none;
+			opacity: 0;
+			z-index: 2;
+		}
+
+		.step:nth-child(3) {
+			position: relative;
+			z-index: -4;
+		}
+
+		.legend-2 {
+			display: flex;
+			position: fixed;
+			bottom: 60px;
+			left: 54%;
+			opacity: 0;
+			margin-top: -30px;
+		}
+
+		.legend-2 p {
+			font-size: 16px;
+			font-family: serif;
+			padding: 0 30px;
+			margin: 0;
+			padding-left: 5px;
+		}
+
+		.legend-2 > div {
+			display: flex;
+		}
+
+		.l-box {
+			min-width: 20px;
+			height: 20px;
+		}
+
+		.summer-winter {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			margin-top: -5px;
+			position: relative;
+			top: 2px;
+			margin-right: 5px;
+			margin-left: -1px;
+		}
+
+		.summer {
+			background: rgb(255, 215, 0);
+		}
+		.winter {
+			background: rgb(173, 216, 230);
+		}
+	</style>
+
+	<body>
+		<div id="app"></div>
+		<main>
+			<nav></nav>
+			<section id="intro"></section>
+			<section id="scrolly">
+				<div id="legend" class="labels"></div>
+				<article>
+					<div class="step" id="one" data-step="1" data-scrollama-index="0">
+						<h1 class="intro__hed">What is Polluting Delhi's Air?</h1>
+						<p>
+							Delhi, the capital city of India, has been grappling with severe
+							air pollution issues for several years. Amidst this air quality
+							crisis, one particular component stands out: PM2.5.
+						</p>
+						<p>
+							The floating particles on this page visually represent these
+							microscopic particles. With a diameter of 2.5 micrometers or
+							smaller, PM2.5 particles can deeply penetrate the respiratory
+							system, posing serious health risks.<br />
+							<em>(Source: Central Pollution Control Board, India)</em>
+						</p>
+					</div>
+					<div class="step" data-step="2" data-scrollama-index="1">
+						<p>
+							In 2023, Delhi experienced only 48 days with PM2.5 levels meeting
+							the acceptable standards set by the United States Environmental
+							Protection Agency (US EPA). The US EPA guideline for PM2.5
+							recommends an annual mean concentration of 10 micrograms per cubic
+							meter (µg/m³) and a 24-hour mean concentration of 34.5 µg/m³.
+						</p>
+					</div>
+					<div class="step" data-step="3" data-scrollama-index="2">
+						<p>
+							The remaining days were marked by varying degrees of pollution,
+							often reaching alarming levels. This consistent struggle with poor
+							air quality has raised concerns about the long-term health effects
+							on the city's residents.
+						</p>
+						<div class="legend-2">
+							<div>
+								<div
+									class="g-box l-box"
+									style="background-color: #7fc97f"
+								></div>
+								<p>Safe</p>
+							</div>
+							<div>
+								<div
+									class="y-box l-box"
+									style="background-color: #f5dc89"
+								></div>
+								<p>Moderate</p>
+							</div>
+							<div>
+								<div
+									class="o-box l-box"
+									style="background-color: #efa140"
+								></div>
+								<p>Unhealthy</p>
+							</div>
+							<div>
+								<div
+									class="r-box l-box"
+									style="background-color: #ea5814"
+								></div>
+								<p>Serious</p>
+							</div>
+							<div>
+								<div
+									class="m-box l-box"
+									style="background-color: #b02400"
+								></div>
+								<p>Hazardous</p>
+							</div>
+						</div>
+					</div>
+					<div class="step" data-step="4" data-scrollama-index="3">
+						<p>
+							With every passing winter, the need to address Delhi’s air
+							pollution grows more urgent. During the winter months of 2023,
+							Delhi experienced a concerning escalation in air pollution, with
+							PM 2.5 levels being well above 300 in the severe category. This
+							dip in air quality, especially occurs every year in the months
+							ahead of winter primarily attributed to colder temperatures and
+							stubble burning by farmers in northwestern India, particularly in
+							Punjab and Haryana. But, is air pollution in Delhi just a winter
+							phenomenon?
+						</p>
+					</div>
+					<div class="step" data-step="5" data-scrollama-index="4">
+						<p>
+							One notable aspect is the seasonality of the pollution. While
+							winter months often witness a spike in pollution due to factors
+							like crop burning and adverse meteorological conditions trapping
+							pollutants, the scorching summer months bring their own set of
+							challenges. Studies have established that pollutants affect the
+							residents of the Indian capital throughout the year now.
+						</p>
+					</div>
+					<div class="step" data-step="6" data-scrollama-index="5">
+						<p>
+							Delving into the sources of PM2.5 pollution particles reveals a
+							complex web of contributors. Vehicular emissions, industrial
+							activities, construction dust, and agricultural practices all play
+							a role. The city's rapid urbanization and population growth
+							further intensify these challenges.
+							<em
+								>(Source:
+								<a style="color: black" href="http://www.raasman.com/"
+									>http://www.raasman.com/)</a
+								>
+							</em>
+						</p>
+						<div class="charts">
+							<p style="padding-bottom: 16px">
+								Summer <span class="summer-winter summer"></span> and Winter
+								<span class="summer-winter winter"></span> Air Pollution Sources
+							</p>
+							<div class="labels">
+								<a>A: Secondary Aerosols</a>
+								<a>B: Vehicle</a>
+								<a>C: Biomass Burning</a>
+								<a>D: Coal and Fly Ash</a>
+								<a>E: Soil and Road dust</a>
+								<a> F: Other</a>
+							</div>
+						</div>
+					</div>
+				</article>
+			</section>
+		</main>
+
+		<script type="module">
+			import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+			// Load data from JSON file
+			d3.json("data/chart2.json").then((data) => {
+				var width = 800,
+					height = 595,
+					radius = 10;
+
+				console.log(data);
+
+				var svg = d3
+					.select("#scrolly")
+					.append("svg")
+					.attr("height", height)
+					.attr("width", width);
+
+				var colorScale = d3
+					.scaleThreshold()
+					.domain([12, 35.4, 55.4, 150.4, 250.4, 350.4, 500])
+					.range([
+						"#7FC97F",
+						"#7FC97F",
+						"#F5DC89",
+						"#EFA140",
+						"#EA5814",
+						"#B02400",
+						"#B02400",
+					]);
+
+				var nodes = data.map((d) => ({ x: width / 2, y: height / 2, data: d }));
+				var tooltip = d3
+					.select("#scrolly")
+					.append("div")
+					.attr("class", "tooltip")
+					.style("opacity", 0);
+
+				function handleMouseOver(event, d) {
+					tooltip.transition().duration(200).style("opacity", 0.9);
+					tooltip
+						.html("PM2.5 Value: " + d.data.pm_all)
+						.style("left", event.pageX + "px")
+						.style("top", event.pageY - 28 + "px");
+				}
+
+				function handleMouseOut() {
+					tooltip.transition().duration(500).style("opacity", 0);
+				}
+
+				document.addEventListener("scroll", function () {
+					// Hide the tooltip when scrolling occurs
+					tooltip.style("opacity", 0);
+				});
+				var circles = svg
+					.selectAll(".pm25")
+					.data(nodes)
+					.enter()
+					.append("circle")
+					.attr("class", "pm25")
+					.attr("r", radius)
+					.style("fill", "#ccc")
+					.on("mouseover", (event, d) => handleMouseOver(event, d))
+					.on("mouseout", handleMouseOut);
+
+				var xAxis = d3.axisTop();
+				var yAxis = d3.axisLeft();
+
+				//Create x axis
+				var xAxisg = svg.append("g").attr("transform", "translate(0,480)");
+
+				//Create y axis
+				var yAxisg = svg.append("g").attr("transform", "translate(100,0)");
+
+				var legendSvg = d3
+					.select("#scrolly > svg")
+					.append("g")
+					.attr("transform", "translate(100, 575)");
+
+				// var legendData = [
+				// 	{ label: "Safe", color: "#7FC97F" },
+				// 	{ label: "Moderate", color: "#F5DC89" },
+				// 	{ label: "Unhealthy", color: "#EFA140" },
+				// 	{ label: "Serious", color: "#EA5814" },
+				// 	{ label: "Hazardous", color: "#B02400" },
+				// ];
+
+				// var legendWidth = 120;
+				// var legendHeight = 20;
+				// var legendOffset = 14;
+
+				// legendSvg
+				// 	.selectAll(".legend-group")
+				// 	.data(legendData)
+				// 	.enter()
+				// 	.append("g")
+				// 	.attr("class", "legend-group")
+				// 	.attr("transform", (d, i) => `translate(${i * legendWidth}, 0)`);
+
+				// legendSvg
+				// 	.selectAll(".legend-group")
+				// 	.append("rect")
+				// 	.attr("class", "legend-square")
+				// 	.attr("x", 0)
+				// 	.attr("y", 0)
+				// 	.attr("width", 15)
+				// 	.attr("height", 15)
+				// 	.attr("fill", (d) => d.color);
+
+				// legendSvg
+				// 	.selectAll(".legend-group")
+				// 	.append("text")
+				// 	.attr("class", "legend-text")
+				// 	.attr("x", 25)
+				// 	.attr("y", legendOffset)
+				// 	.text((d) => d.label);
+
+				var forceXCombine = d3.forceX(width / 2).strength(0.01);
+				var forceYCombine = d3.forceY(height / 2).strength(0.01);
+
+				var simulation = d3
+					.forceSimulation(nodes)
+					.force("x", forceXCombine)
+					.force("y", forceYCombine)
+					.force("collide", d3.forceCollide(radius + 3))
+					.on("tick", ticked);
+
+				function ticked() {
+					circles
+						.attr("cx", (d) => d.x)
+						.attr("cy", (d) => d.y)
+						.transition()
+						.duration(100);
+				}
+
+				// x axis winter
+
+				var forceXTime = d3
+					.forceX(function (d) {
+						if (d.data.Date === 10) {
+							return 200;
+						} else if (d.data.Date === 11) {
+							return 400;
+						} else if (d.data.Date === 12) {
+							return 600;
+						} else {
+							return -500; // R
+						}
+					})
+					.strength(0.05);
+
+				// x axis summer
+
+				var forceXSummer = d3
+					.forceX(function (d) {
+						if (d.data.Date === 4) {
+							return 200;
+						} else if (d.data.Date === 5) {
+							return 400;
+						} else if (d.data.Date === 6) {
+							return 600;
+						} else {
+							return -500; // R
+						}
+					})
+					.strength(0.05);
+
+				var scroller = scrollama();
+				scroller
+					.setup({
+						step: "#scrolly article .step",
+						offset: 0.3,
+					})
+					.onStepEnter(handleStep)
+					.onStepExit(handleStep);
+
+				function handleMouseOver(event, d) {
+					tooltip.transition().duration(200).style("opacity", 0.9);
+					tooltip
+						.html("PM2.5 Value: " + d.data.pm_all)
+						.style("left", event.pageX + "px")
+						.style("top", event.pageY - 28 + "px");
+				}
+
+				function handleMouseOut() {
+					tooltip.transition().duration(500).style("opacity", 0);
+				}
+
+				function handleStep(response) {
+					// Reset colors to the initial state for all steps
+					circles.style("fill", "#ccc");
+					console.log(response.index);
+					// Update circle colors based on the color scale for the current step
+					simulation
+						.force("x", forceXCombine.strength(0.05))
+						.force("y", forceYCombine.strength(0.05));
+					// .alpha(1);
+					xAxisg.style("opacity", 0);
+					yAxisg.style("opacity", 0);
+
+					legendSvg.transition().duration(500).style("opacity", 0);
+					if (response.index === 1) {
+						circles
+							.filter((d) => d.data.pm_all < 35.4)
+							.style("fill", "#7FC97F");
+						d3.select(".legend-2").style("opacity", 0);
+					} else if (response.index === 2) {
+						simulation.force("x", forceXCombine).force("y", forceYCombine);
+						d3.selectAll(".legend-group").style("opacity", 1);
+						// Use the original color scale for step 3
+						circles.style("fill", (d) => colorScale(d.data.pm_all));
+						simulation.force("x", forceXCombine).force("y", forceYCombine);
+						legendSvg.transition().duration(500).style("opacity", 1); // Show legend
+						d3.select(".legend-2").style("opacity", 1);
+					} else if (response.index === 3) {
+						legendSvg.transition().duration(500).style("opacity", 1); // Show legend
+						circles.style("fill", (d) => colorScale(d.data.pm_all));
+						console.log(3);
+						simulation
+							.force("x", forceXTime.strength(0.05))
+							.force("y", forceYCombine.strength(0.015))
+							.force("collide", d3.forceCollide(13))
+							.alpha(1)
+							.restart();
+
+						// Update axes
+						var y = d3.scaleOrdinal().domain(["Time"]).range([600]);
+						yAxis = yAxis.scale(y);
+						yAxisg.call(yAxis);
+
+						var x = d3
+							.scaleBand()
+							.domain(["October", "November", "December"])
+							.range([100, 700])
+							.padding(0);
+						xAxis = xAxis.scale(x);
+						xAxisg.call(xAxis);
+						xAxisg.style("opacity", 1);
+						xAxisg.selectAll(".tick line").remove();
+						xAxisg.selectAll(".domain").remove();
+
+						xAxisg
+							.selectAll(".tick text")
+							.style("fill", "#555")
+							.attr("font-size", "16px")
+							.attr("dy", "0.5em")
+							.style("text-anchor", "middle");
+						d3.select(".legend-2").style("opacity", 0);
+					} else if (response.index === 4) {
+						d3.select("#scrolly > svg").style("z-index", 1);
+						legendSvg.transition().duration(500).style("opacity", 1);
+						d3.select("#scrolly > svg")
+							.transition()
+							.duration(100)
+							.style("opacity", 1);
+						circles.style("fill", (d) => colorScale(d.data.pm_all));
+
+						simulation
+							.restart()
+							.force("x", forceXSummer.strength(0.05))
+							.force("y", forceYCombine.strength(0.015))
+							.force("collide", d3.forceCollide(13))
+							.alpha(1);
+
+						var y = d3.scaleOrdinal().domain(["Time"]).range([550]);
+						yAxis = yAxis.scale(y);
+						yAxisg.call(yAxis);
+
+						var x = d3
+							.scaleBand()
+							.domain(["April", "May", "June"])
+							.range([100, 650])
+							.padding(0);
+						xAxis = xAxis.scale(x);
+						xAxisg.call(xAxis);
+						xAxisg.style("opacity", 1);
+						xAxisg.selectAll(".tick line").remove();
+						xAxisg.selectAll(".domain").remove();
+
+						xAxisg
+							.selectAll(".tick text")
+							.style("fill", "#555")
+							.attr("font-size", "16px")
+							.attr("dy", "0.5em")
+							.style("text-anchor", "middle");
+						d3.select(".charts").transition().style("opacity", 0);
+					} else if (response.index === 5) {
+						d3.select(".legend-2").style("opacity", 0);
+						d3.select("#scrolly > svg").style("opacity", 0);
+						d3.select("#scrolly > svg").style("z-index", -1);
+						d3.select(".charts").transition().style("opacity", 1);
+					}
+				}
+
+				var tooltip = d3
+					.select("body")
+					.append("div")
+					.attr("class", "tooltip")
+					.style("opacity", 0);
+			});
+
+			let january = [{ A: 3.8, B: 1.7, C: 1.7, D: 0.6, E: 0.2, F: 2 }];
+			let november = [{ A: 3, B: 3, C: 2.8, D: 0.3, E: 0.2, F: 0.7 }];
+			let december = [{ A: 0, B: 4.8, C: 2.9, D: 0.4, E: 0.1, F: 0.8 }];
+			let winter = { A: 2.26, B: 3.16, C: 2.46, D: 0.43, E: 0.76, F: 1.16 };
+			let april = [{ A: 2, B: 2.5, C: 0.6, D: 1.4, E: 1.6, F: 1.9 }];
+			let may = [{ A: 1.4, B: 1.6, C: 0.8, D: 1.4, E: 2.4, F: 2.4 }];
+			let june = [{ A: 2.7, B: 2.4, C: 0.4, D: 0.8, E: 2.1, F: 1.6 }];
+			let summer = { A: 2.03, B: 2.16, C: 0.6, D: 1.2, E: 2.03, F: 1.96 };
+			let datasets = [winter, summer];
+
+			let colors = ["#ffd700", "#add8e6"];
+
+			// Function to create a radar chart
+			let features = ["A", "B", "C", "D", "E", "F"];
+
+			let width = 405;
+			let height = 400;
+			let svg = d3
+				.select(".charts")
+				.insert("svg", "div")
+				.attr("width", width)
+				.attr("height", height);
+
+			let radialScale = d3.scaleLinear().domain([0, 3]).range([0, 100]);
+			let ticks = [1, 2, 3, 4, 5];
+
+			// svg
+			// 	.selectAll("circle")
+			// 	.data(ticks)
+			// 	.enter()
+			// 	.append("circle")
+			// 	.attr("cx", width / 2)
+			// 	.attr("cy", height / 2)
+			// 	.attr("fill", "none")
+			// 	.attr("stroke", "#eaeceb")
+			// 	.attr("r", (d) => radialScale(d));
+
+			function angleToCoordinate(angle, value) {
+				let x = Math.cos(angle) * radialScale(value);
+				let y = Math.sin(angle) * radialScale(value);
+				return { x: width / 2 + x * 1.2, y: height / 2 - y * 1.2 };
+			}
+
+			let featureData = features.map((f, i) => {
+				let angle = Math.PI / 2 + (2 * Math.PI * i) / features.length;
+				return {
+					name: f,
+					angle: angle,
+					line_coord: angleToCoordinate(angle, 4),
+					label_coord: angleToCoordinate(angle, 4.5),
+				};
+			});
+
+			// draw axis line
+			svg
+				.selectAll("line")
+				.data(featureData)
+				.join((enter) =>
+					enter
+						.append("line")
+						.attr("x1", width / 2)
+						.attr("y1", height / 2)
+						.attr("x2", (d) => d.line_coord.x)
+						.attr("y2", (d) => d.line_coord.y)
+						.attr("stroke", "black")
+				);
+
+			// draw axis label
+			svg
+				.selectAll(".axislabel")
+				.data(featureData)
+				.join((enter) =>
+					enter
+						.append("text")
+						.attr("x", (d) => d.label_coord.x)
+						.attr("y", (d) => d.label_coord.y)
+						.text((d) => d.name)
+				);
+
+			let line = d3
+				.line()
+				.x((d) => d.x)
+				.y((d) => d.y);
+
+			function getPathCoordinates(data_point) {
+				let coordinates = [];
+				for (var i = 0; i < features.length; i++) {
+					let ft_name = features[i];
+					let angle = Math.PI / 2 + (2 * Math.PI * i) / features.length;
+					coordinates.push(angleToCoordinate(angle, data_point[ft_name]));
+				}
+				return coordinates;
+			}
+			svg
+				.selectAll("path")
+				.data(datasets)
+				.join((enter) =>
+					enter
+						.append("path")
+						.datum((d) => getPathCoordinates(d))
+						.attr("d", line)
+						.attr("stroke-width", 3)
+						.attr("stroke", (_, i) => colors[i])
+						.attr("fill", (_, i) => colors[i])
+						.attr("stroke-opacity", 1)
+						.attr("opacity", 0.5)
+				);
+
+			// // Loop through datasets and create charts
+			// for (let i = 0; i < datasets.length; i++) {
+			// 	createRadarChart(datasets[i], `chart${i + 1}`);
+			// }
+		</script>
+	</body>
+</html>
